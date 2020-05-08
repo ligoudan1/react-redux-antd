@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import * as ACTION from './store/actionCreators';
 class TodoItem extends Component {
 
-    componentWillMount() {
-        console.log('componentWillMount');
-    }
-
     componentDidMount() {
         console.log('componentDidMount');
     }
