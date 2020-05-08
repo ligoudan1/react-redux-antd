@@ -10,7 +10,9 @@ class TodoItem extends Component {
         };
         this.storeChage = this.storeChage.bind(this);
         store.subscribe(this.storeChage);
-        this.removeItem = this.removeItem.bind(this)
+        this.removeItem = this.removeItem.bind(this);
+        console.log('constructor');
+        
     }
     storeChage() {
         this.setState({
@@ -22,6 +24,16 @@ class TodoItem extends Component {
         store.dispatch(action)
     }
 
+    componentWillMount() {
+        console.log('componentWillMount');
+    }
+
+    componentDidMount() {
+        console.log('componentDidMount');
+    }
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+    }
     shouldComponentUpdate(nextProps, nextState) {
         // 性能优化,如果两个数组完全一致,则不触发视图的更新
         if (nextState.list.toString() === this.state.list.toString()) {
@@ -31,6 +43,8 @@ class TodoItem extends Component {
         }
     }
     render() {
+        console.log('render');
+        
         return (
             <List
                 style={{ 'width': '300px' }}
