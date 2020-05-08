@@ -1,28 +1,8 @@
 import React, { Component } from 'react';
 import { List } from 'antd';
-import store from './store'
+import { connect } from 'react-redux';
 import * as ACTION from './store/actionCreators';
 class TodoItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            list: store.getState().list
-        };
-        this.storeChage = this.storeChage.bind(this);
-        store.subscribe(this.storeChage);
-        this.removeItem = this.removeItem.bind(this);
-        console.log('constructor');
-        
-    }
-    storeChage() {
-        this.setState({
-            list: store.getState().list
-        })
-    }
-    removeItem(index) {
-        const action = ACTION.ROMVE_ITEM(index)
-        store.dispatch(action)
-    }
 
     componentWillMount() {
         console.log('componentWillMount');
@@ -34,24 +14,25 @@ class TodoItem extends Component {
     componentWillUnmount() {
         console.log('componentWillUnmount');
     }
+
     shouldComponentUpdate(nextProps, nextState) {
         // 性能优化,如果两个数组完全一致,则不触发视图的更新
-        if (nextState.list.toString() === this.state.list.toString()) {
+        if (nextProps.list.toString() === this.props.list.toString()) {
             return false;
         } else {
             return true;
         }
     }
+    
     render() {
-        console.log('render');
-        
+        let { list, removeItem } = this.props
         return (
             <List
                 style={{ 'width': '300px' }}
                 bordered
-                dataSource={this.state.list}
+                dataSource={list}
                 renderItem={(item, index) => (
-                    <List.Item onClick={() => { this.removeItem(index) }}>
+                    <List.Item onClick={() => { removeItem(index) }}>
                         {item}
                     </List.Item>
                 )}
@@ -59,5 +40,19 @@ class TodoItem extends Component {
         );
     }
 }
+const stateToProps = (state) => {
+    return {
+        list: state.list
+    }
+}
 
-export default TodoItem;
+const dispatchToProps = (dispatch) => {
+    return {
+        removeItem(index) {
+            const action = ACTION.ROMVE_ITEM(index)
+            dispatch(action)
+        }
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(TodoItem);

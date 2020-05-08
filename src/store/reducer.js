@@ -19,8 +19,6 @@ export default (state = defaultState, action) => {
     }
     if (action.type === TYPES.REMOVE_ITEM) {
         let newState = JSON.parse(JSON.stringify(state))
-        console.log(action.index);
-
         newState.list.splice(action.index, 1);
         return newState
     }
