@@ -1,13 +1,14 @@
-import React, {Component} from 'react';
-import Todo from './Todo';
-import './css/App.css';
-
-class App extends Component {
-  render() {
+import React from 'react'
+import Color from './Color';
+import ColorTxt from './ColorTxt';
+import ColorBtn from './ColorBtn';
+const App = function () {
     return (
-        <Todo />
+        <Color >
+            <ColorTxt />
+            <ColorBtn />
+        </Color>
     )
-  }
 }
 
 export default App;
